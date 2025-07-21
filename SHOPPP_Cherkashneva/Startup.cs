@@ -1,14 +1,8 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using SHOPPP_Cherkashneva.Data.DataBase;
 using SHOPPP_Cherkashneva.Data.Interfaces;
-using SHOPPP_Cherkashneva.Data.Mocks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SHOPPP_Cherkashneva
 {
@@ -18,8 +12,8 @@ namespace SHOPPP_Cherkashneva
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IItems, MockItems>();
-            services.AddTransient<ICategorys, MockCategorys>();
+            services.AddTransient<IItems, BDItems>();
+            services.AddTransient<ICategorys, DBCategorys>();
 
 
             services.AddMvc(option => option.EnableEndpointRouting = false);

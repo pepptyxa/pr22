@@ -1,21 +1,48 @@
-﻿@using SHOPPP_Cherkashneva.Data.Models;
-@model IEnumerable<Items>;
+﻿@using SHOPPP_Cherkashneva.Data.ViewModell;
+@using SHOPPP_Cherkashneva.Data.Models;
+@model VMItems
 
 @{
     Layout = "_Layout";
 }
+<div>
+    <select onchange="SelectCategory(this)">
+        <option value="0">Выбрать....</option>
+        @{
+            foreach(Categorys categorys in Model.Categorys)
+            {
+                if (categorys.Id == Model.SelectCategory)
+                {
+                        <option value="@categorys.Id" selected="selected">@categorys.Name</option>
+                }
+                else
+                {
+                        <option value="@categorys.Id" >@categorys.Name</option>
+                }
+            }
+         }
+    </select>
+    <script>
+        function SelectCategory(sender){
+            window.location = "/Items/List?id=" + sender.value;
+        }
+    </script>
+</div>
 <h2>Все предметы</h2>
 @{
-    foreach (var item in Model)
+    foreach (var item in Model.Items)
     {
-        <div class="item">
-            <img src="@item.Img" />
-            <h3>Модель: @item.Name</h3>
-            <div class="data">
-                <p>Цена: @item.Price</p>
-                <p>Категория: @item.Category.Name</p>
-                <div>Описание: @item.Description</div>
+        if(item.Category.Id== Model.SelectCategory)
+        {
+            <div class="item">
+                <img src="@item.Img" />
+                <h3>Модель: @item.Name</h3>
+                <div class="data">
+                    <p>Цена: @item.Price</p>
+                    <p>Категория: @item.Category.Name</p>
+                    <div>Описание: @item.Description</div>
+                </div>
             </div>
-        </div>
+        }
     }
 }
