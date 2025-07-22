@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using SHOPPP_Cherkashneva.Data.Interfaces;
+using SHOPPP_Cherkashneva.Data.Models;
 using SHOPPP_Cherkashneva.Data.ViewModell;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace SHOPPP_Cherkashneva.Controllers
 {
@@ -26,6 +29,12 @@ namespace SHOPPP_Cherkashneva.Controllers
             VMItems.SelectCategory = id;
 
             return View(VMItems);
+        }
+        [HttpGet]
+        public ViewResult Add()
+        {
+            IEnumerable<Categorys> Categorys = IAllCategorys.AllCategorys;
+            return View(Categorys);
         }
     }
 }
