@@ -38,9 +38,10 @@ namespace SHOPPP_Cherkashneva.Data.Mocks
                 };
             }
         }
+        public int Add(Items item)
+        {
+            return 0;
+        }
     }
-    public int Add(Items item)
-    {
-        
-    }
+    
 }

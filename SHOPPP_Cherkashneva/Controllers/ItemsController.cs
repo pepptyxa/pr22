@@ -58,7 +58,7 @@ namespace SHOPPP_Cherkashneva.Controllers
                 Category = new Categorys() { Id = idCategory }
             };
             int id = IAllItems.Add(newItems);
-            return Redirect("/Items/Update?id" + id);
+            return Redirect("/Items/Update?id=" + id);
         }
     }
 }
