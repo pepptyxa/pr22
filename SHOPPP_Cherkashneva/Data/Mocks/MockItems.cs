@@ -1,4 +1,6 @@
-﻿using SHOPPP_Cherkashneva.Data.Interfaces;
+﻿using MySql.Data.MySqlClient;
+using SHOPPP_Cherkashneva.Data.Common;
+using SHOPPP_Cherkashneva.Data.Interfaces;
 using SHOPPP_Cherkashneva.Data.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,5 +38,9 @@ namespace SHOPPP_Cherkashneva.Data.Mocks
                 };
             }
         }
+    }
+    public int Add(Items item)
+    {
+        
     }
 }
