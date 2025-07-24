@@ -4,7 +4,7 @@ namespace SHOPPP_Cherkashneva.Data.Common
 {
     public class Connection
     {
-        readonly static string ConnectionData = "server:127.0.0.1;uid=root;pwd=;database=shop;";
+        readonly static string ConnectionData = "server=127.0.0.1; uid=root; database=Shop";
 
         public static MySqlConnection OpenConnection()
         {

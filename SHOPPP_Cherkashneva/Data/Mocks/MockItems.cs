@@ -42,6 +42,16 @@ namespace SHOPPP_Cherkashneva.Data.Mocks
         {
             return 0;
         }
+
+        public void Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Update(Items item)
+        {
+            throw new System.NotImplementedException();
+        }
     }
     
 }

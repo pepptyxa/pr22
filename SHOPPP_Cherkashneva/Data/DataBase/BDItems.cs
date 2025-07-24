@@ -78,5 +78,34 @@ namespace SHOPPP_Cherkashneva.Data.DataBase
             Connection.CloseConnection(connection);
             return idItem;
         }
+
+        public void Update(Items item)
+        {
+            MySqlConnection connection = Connection.OpenConnection();
+            string query = "UPDATE `Items` SET `Name`=@name, `Description`=@desc, `Img`=@img, `Price`=@price, `IdCategory`=@category WHERE `Id`=@id";
+            using (MySqlCommand cmd = new MySqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@name", item.Name);
+                cmd.Parameters.AddWithValue("@desc", item.Description);
+                cmd.Parameters.AddWithValue("@img", item.Img);
+                cmd.Parameters.AddWithValue("@price", item.Price);
+                cmd.Parameters.AddWithValue("@category", item.Category.Id);
+                cmd.Parameters.AddWithValue("@id", item.Id);
+                cmd.ExecuteNonQuery();
+            }
+            Connection.CloseConnection(connection);
+        }
+
+        public void Delete(int id)
+        {
+            MySqlConnection connection = Connection.OpenConnection();
+            string query = "DELETE FROM `Items` WHERE `Id`=@id";
+            using (MySqlCommand cmd = new MySqlCommand(query, connection))
+            {
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.ExecuteNonQuery();
+            }
+            Connection.CloseConnection(connection);
+        }
     }
 }

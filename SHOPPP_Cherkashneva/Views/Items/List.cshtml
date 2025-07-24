@@ -36,11 +36,16 @@
         {
             <div class="item">
                 <img src="@item.Img" />
-                <h3>Модель: @item.Name</h3>
                 <div class="data">
-                    <p>Цена: @item.Price</p>
-                    <p>Категория: @item.Category.Name</p>
+                    <h3>Модель: @item.Name</h3>
+                    <div>Цена: @item.Price</div>
+                    <div>Категория: @item.Category.Name</div>
                     <div>Описание: @item.Description</div>
+                    <a href="/Items/Update?id=@item.Id" style="text-decoration:none; color:red">Изменить</a>
+                    <form class="delete" method="post" action="/Items/Delete" onsubmit="return confirm('Вы уверен что хотите удалить предмет?');">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="submit" value="Удалить" />
+                    </form>
                 </div>
             </div>
         }

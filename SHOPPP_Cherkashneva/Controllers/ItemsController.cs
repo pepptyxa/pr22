@@ -7,6 +7,9 @@ using SHOPPP_Cherkashneva.Data.ViewModell;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using System;
 
 namespace SHOPPP_Cherkashneva.Controllers
 {
@@ -15,13 +18,13 @@ namespace SHOPPP_Cherkashneva.Controllers
         private IItems IAllItems;
         private ICategorys IAllCategorys;
         private VMItems VMItems = new VMItems();
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IHostingEnvironment hostingEnviroment;
 
-        public ItemsController(IItems IAllItems, ICategorys IAllCategorys, IHostingEnvironment hostingEnvironment)
+        public ItemsController(IItems IAllItems, ICategorys IAllCategorys, IHostingEnvironment hostingEnviroment)
         {
             this.IAllItems = IAllItems;
             this.IAllCategorys = IAllCategorys;
-            this.hostingEnvironment = hostingEnvironment;
+            this.hostingEnviroment = hostingEnviroment;
         }
 
         public ViewResult List(int id = 0)
@@ -45,7 +48,7 @@ namespace SHOPPP_Cherkashneva.Controllers
         {
             if(file != null)
             {
-                var uploads = Path.Combine(hostingEnvironment.WebRootPath, "img");
+                var uploads = Path.Combine(hostingEnviroment.WebRootPath, "img");
                 var filePath = Path.Combine(uploads, file.FileName);
                 file.CopyTo(new FileStream(filePath, FileMode.Create));
             }
@@ -59,6 +62,50 @@ namespace SHOPPP_Cherkashneva.Controllers
             };
             int id = IAllItems.Add(newItems);
             return Redirect("/Items/Update?id=" + id);
+        }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var item = IAllItems.AllItems.FirstOrDefault(x => x.Id == id);
+            ViewBag.Categories = IAllCategorys.AllCategorys;
+            return View(item);
+        }
+
+        [HttpPost]
+        public IActionResult Update(int id, string name, string description, IFormFile file, float price, int idCategory)
+        {
+            var existingItem = IAllItems.AllItems.FirstOrDefault(x => x.Id == id);
+            if (existingItem == null) return NotFound();
+
+            if (file != null && file.Length > 0)
+            {
+                var uploads = Path.Combine(hostingEnviroment.WebRootPath, "img");
+                Directory.CreateDirectory(uploads);
+                var fileName = Path.GetFileName(file.FileName);
+                var filePath = Path.Combine(uploads, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+                existingItem.Img = "/img/" + fileName;
+            }
+
+            existingItem.Name = name;
+            existingItem.Description = description;
+            existingItem.Price = Convert.ToInt32(price);
+            existingItem.Category = new Categorys() { Id = idCategory };
+
+            IAllItems.Update(existingItem);
+
+            return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            IAllItems.Delete(id);
+            return RedirectToAction("List");
         }
     }
 }
