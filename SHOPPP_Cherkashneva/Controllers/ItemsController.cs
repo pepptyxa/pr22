@@ -37,12 +37,14 @@ namespace SHOPPP_Cherkashneva.Controllers
 
             return View(VMItems);
         }
+
         [HttpGet]
         public ViewResult Add()
         {
             IEnumerable<Categorys> Categorys = IAllCategorys.AllCategorys;
             return View(Categorys);
         }
+
         [HttpPost]
         public RedirectResult Add(string name, string description, IFormFile file, float price, int idCategory)
         {
@@ -56,7 +58,7 @@ namespace SHOPPP_Cherkashneva.Controllers
             {
                 Name = name,
                 Description = description,
-                Img = file.FileName,
+                Img = "/img/" + Path.GetFileName(file.FileName),
                 Price = (int)price,
                 Category = new Categorys() { Id = idCategory }
             };
