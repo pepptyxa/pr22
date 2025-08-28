@@ -51,7 +51,7 @@
                     <div>Цена: @item.Price</div>
                     <div>Категория: @item.Category.Name</div>
                     <div>Описание: @item.Description</div>
-                    <a href="/Items/Update?id=@item.Id" style="text-decoration:none; color:red">Изменить</a>
+                    <a href="/Items/Update?id=@item.Id">Изменить</a>
                     <form class="delete" method="post" action="/Items/Delete" onsubmit="return confirm('Вы уверен что хотите удалить предмет?');">
                         <input type="hidden" name="id" value="@item.Id" />
                         <input type="submit" value="Удалить" />
